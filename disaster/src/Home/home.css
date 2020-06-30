@@ -3,17 +3,12 @@
     width: 100%;
     height: 100%;
 }
-
-.headicon {
-    vertical-align: middle;
-    width: 80%;
-}
-
+  
 .headline {
     height: 4em;
     margin: 0% 1em;
 }
-
+  
 .headfactor {
     display: inline-block;
     height: 4em;
@@ -55,11 +50,6 @@
 .header {
     font-weight: bolder;
     margin: 25px 0% 0% 0%;
-    color: black;
-}
-
-.black {
-      color: black;
 }
   
 .headlinesearch {
@@ -76,6 +66,13 @@
   
 .headlineetc {
     width: 10%
+}
+  
+.bodyline {
+    background-image: url("https://images.unsplash.com/photo-1567140980243-5b02c9e1bfd8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80");
+    opacity: 0.7;
+    height: 45em;
+    background-size: cover;
 }
   
 .bodyimg {
@@ -128,6 +125,6 @@
     line-height: 1em;
 }
 
-.none {
-      text-decoration: none;
+h4.subfont {
+    color: white;
 }
