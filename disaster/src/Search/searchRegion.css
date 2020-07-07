@@ -1,0 +1,33 @@
+.dicwhitebox {
+    background: white;
+    width: 20em;
+    height: 15em;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 5em 3em 0 3em;
+    padding-top: 6px;
+    vertical-align: middle;
+}
+
+.oneline {
+    width: 100%;
+    text-align: center;
+    margin-top: 0em;
+}
+
+.maindisplay {
+    width: 100%;
+    height: 100%;
+}
+
+.blockimage {
+    height: 5em;
+    width: 7em;
+}
+
+.dicalign {
+    text-align: left;
+    color: black;
+    padding: 0 1em;
+}

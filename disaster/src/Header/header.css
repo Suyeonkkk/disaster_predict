@@ -21,7 +21,7 @@
     margin: 0em 0em;
     text-align: center;
 }
-  
+
 .height5 {
     height: auto;
     margin: 7px 1em;
@@ -32,26 +32,26 @@
     font-size: 1em;
     line-height: 1em;
 }
-  
+
 .rightside {
     float: right;
 }
-  
+
 .headlinelogo {
     width: 4em; 
 }
-  
+
 .headbutton {
     float: right;
 }
-  
+
 .headlineexplanation {
     width: 12%;
     text-align: left;
     margin: 0% 0% 0% 1em;
     line-height: 2%;
 }
-  
+
 .header {
     font-weight: bolder;
     margin: 25px 0% 0% 0%;
@@ -61,33 +61,33 @@
 .black {
       color: black;
 }
-  
+
 .headlinesearch {
     width: 50%;
 }
-  
+
 .headlinelogin {
     width: 10%;
 }
-  
+
 .headlinejoin {
     width: 10%;
 }
-  
+
 .headlineetc {
     width: 10%
 }
-  
+
 .bodyimg {
     height: 100%;
     width: 100%;
 }
-  
+
 .maindisplay {
     color: white;
     vertical-align: middle;
 }
-  
+
 .search {
     border: 1px solid #DDD;
     border-radius: 3px;
@@ -100,20 +100,20 @@
     font-size: 1em;
     line-height: 1em;
 }
-  
+
 .mainfont {
     font-size: 50px;
     font-weight: bolder;
     margin: 0 2%;
     padding-top: 4em;
 }
-  
+
 .subfont {
     font-size: 19px;
     font-weight: bold;
     margin: 0 2%;
 }
-  
+
 .mainsearch {
     border: 1px solid #DDD;
     border-radius: 3px;

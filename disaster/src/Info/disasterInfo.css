@@ -1,0 +1,45 @@
+.infowhitebox {
+    height: 30em;
+    width: 80%;
+    background: white;
+    border-radius: 1em;
+    margin: 0 10%
+}
+
+.infoblockimage {
+    vertical-align: middle;
+    float: left;
+    height: 20em;
+    width: auto;
+    margin: 5em 2em;
+}
+
+.infomainfont {
+    color: black;
+    font-size: 24px;
+    font-weight: bolder;
+    margin: 0;
+    text-align: left;
+}
+
+.infosubfont {
+    text-align: left;
+    margin: 2em;
+    color: black;
+    font-size: 15px;
+    margin: 0 0 1em 0;
+}
+
+.transbox {
+    height: 7em;
+    width: 100%;
+}
+
+.explain {
+    height: 24em;
+    width: 55%;
+    float: right;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    margin-right: 3em;
+}
