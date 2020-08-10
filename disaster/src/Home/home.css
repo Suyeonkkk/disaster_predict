@@ -83,6 +83,7 @@
 .maindisplay {
     color: white;
     vertical-align: middle;
+    background-color:rgba(0, 0, 0, 0.5);
 }
 
 .search {
@@ -94,6 +95,30 @@
     height: 1em;
     width: 90%;
     text-align: left;
+    font-size: 1em;
+    line-height: 1em;
+}
+
+.subSearch {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    color: #000;
+    margin: 7px auto 0em auto;
+    height: 2em;
+    width: 11em;
+    text-align: left;
+    font-size: 1em;
+    line-height: 1em;
+}
+
+.subButton {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    color: #000;
+    margin: 7px auto 0em auto;
+    height: 2em;
+    width: 3em;
+    text-align: center;
     font-size: 1em;
     line-height: 1em;
 }
@@ -127,4 +152,8 @@
 
 h4.subfont {
     color: white;
+}
+
+.blackfont {
+    color: balck;
 }

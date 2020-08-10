@@ -1,5 +1,5 @@
 import React from 'react';
-import './disasterInfo.css';
+import './typhoonInfo.css';
 
 const DisasterInfo = () => {
     return (

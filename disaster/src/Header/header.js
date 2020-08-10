@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Header = () => {
     return (
-        <div classNAme="line block">
+        <div className="line block">
             <div className="headline">
                 <div className="headlinelogo headfactor">
                     <Link to="/" className="none">
@@ -22,18 +22,18 @@ const Header = () => {
                 </div>
                 <div className="rightside">
                     <div className="headfactor headbutton">
-                        <Link to="/SearchRegion" className="none">
-                            <p className="height5">Region Search</p>
+                        <Link to="/TyphoonInfo" className="none">
+                            <p className="height5">TyphoonInfo</p>
                         </Link>
                     </div>
                     <div className="headfactor headbutton">
                         <Link to="/SearchDate" className="none">
-                            <p className="height5">Date Search</p>
+                            <p className="height5">SearchDate</p>
                         </Link>
                     </div>
                     <div className="headfactor headbutton">
-                        <Link to="/" className="none">
-                            <p className="height5">Header</p>
+                        <Link to="/SearchRegion" className="none">
+                            <p className="height5">SearchRegion</p>
                         </Link>
                     </div>
                 </div>

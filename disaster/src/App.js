@@ -4,7 +4,7 @@ import Header from './Header/header';
 import Home from './Home/home';
 import SearchRegion from './Search/searchRegion';
 import SearchDate from './Search/searchDate';
-import DisasterInfo from './Info/disasterInfo';
+import TyphoonInfo from './Typhoon/typhoonInfo';
 
 class App extends Component {
   render() {
@@ -15,7 +15,7 @@ class App extends Component {
           <Route exact path="/" component={ Home } />
           <Route path="/SearchRegion" component={ SearchRegion } />
           <Route path="/SearchDate" component={ SearchDate } />
-          <Route path="/DisasterInfo" component={ DisasterInfo } />
+          <Route path="/TyphoonInfo" component={ TyphoonInfo } />
         </div>
       </Router>
     );
