@@ -44,10 +44,10 @@ if (rescode == 200):
     # json형식의 데이터를 dict 형식으로 변환
 
     size = int(rDD['response']['body']['totalCount'])
-    weather = [[0] * 16] * (size)
+    weather = [[0] * 17] * (size)
     date = dt.datetime(2012, 1, 1).date()
 
-    weather[0] = ['date', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
+    weather[0] = ['date', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
     for index in range(1, size):
         try:
             avgTa = rDD['response']['body']['items']['item'][index]['avgTa']
@@ -66,6 +66,12 @@ if (rescode == 200):
             # maxTa 최고 기온
         except TypeError:
             maxTa = -99
+
+        try:
+            avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+            # avgTd 평균 이슬점온도
+        except TypeError:
+            avgTd = -99
 
         try:
             minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
@@ -141,7 +147,7 @@ if (rescode == 200):
         if (float(sumRn) > 0):
             sumRn = 1
 
-        weather[index] = [str(date), avgTa, minTa, maxTa, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
+        weather[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
 
         date = date + td.Timedelta(days = 1)
 
@@ -180,7 +186,7 @@ if (rescode == 200):
     # json형식의 데이터를 dict 형식으로 변환
 
     size = int(rDD['response']['body']['totalCount'])
-    weather2 = [[0] * 16] * (size)
+    weather2 = [[0] * 17] * (size)
     date = dt.datetime(2014, 1, 1).date()
 
     for index in range(0, size - 1):
@@ -201,6 +207,12 @@ if (rescode == 200):
             # maxTa 최고 기온
         except TypeError:
             maxTa = -99
+
+        try:
+            avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+            # avgTd 평균 이슬점온도
+        except TypeError:
+            avgTd = -99
 
         try:
             minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
@@ -276,7 +288,7 @@ if (rescode == 200):
         if (float(sumRn) > 0):
             sumRn = 1
 
-        weather2[index] = [str(date), avgTa, minTa, maxTa, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
+        weather2[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
 
         date = date + td.Timedelta(days = 1)
 
@@ -315,7 +327,7 @@ if (rescode == 200):
     # json형식의 데이터를 dict 형식으로 변환
 
     size = int(rDD['response']['body']['totalCount'])
-    weather3 = [[0] * 16] * (size)
+    weather3 = [[0] * 17] * (size)
     date = dt.datetime(2016, 1, 1).date()
 
     for index in range(0, size - 1):
@@ -336,6 +348,12 @@ if (rescode == 200):
             # maxTa 최고 기온
         except TypeError:
             maxTa = -99
+
+        try:
+            avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+            # avgTd 평균 이슬점온도
+        except TypeError:
+            avgTd = -99
 
         try:
             minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
@@ -411,7 +429,7 @@ if (rescode == 200):
         if (float(sumRn) > 0):
             sumRn = 1
 
-        weather3[index] = [str(date), avgTa, minTa, maxTa, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
+        weather3[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
 
         date = date + td.Timedelta(days = 1)
 
@@ -450,7 +468,7 @@ if (rescode == 200):
     # json형식의 데이터를 dict 형식으로 변환
 
     size = int(rDD['response']['body']['totalCount'])
-    weather4 = [[0] * 16] * (size)
+    weather4 = [[0] * 17] * (size)
     date = dt.datetime(2018, 1, 1).date()
 
     for index in range(0, size - 1):
@@ -471,6 +489,12 @@ if (rescode == 200):
             # maxTa 최고 기온
         except TypeError:
             maxTa = -99
+
+        try:
+            avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+            # avgTd 평균 이슬점온도
+        except TypeError:
+            avgTd = -99
 
         try:
             minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
@@ -546,7 +570,7 @@ if (rescode == 200):
         if (float(sumRn) > 0):
             sumRn = 1
 
-        weather4[index] = [str(date), avgTa, minTa, maxTa, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
+        weather4[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
 
         date = date + td.Timedelta(days = 1)
 
@@ -586,7 +610,7 @@ if (rescode == 200):
     # json형식의 데이터를 dict 형식으로 변환
 
     size = int(rDD['response']['body']['totalCount'])
-    weather5 = [[0] * 16] * (size)
+    weather5 = [[0] * 17] * (size)
     date = dt.datetime(2020, 1, 1).date()
 
     for index in range(0, size - 1):
@@ -607,6 +631,12 @@ if (rescode == 200):
             # maxTa 최고 기온
         except TypeError:
             maxTa = -99
+
+        try:
+            avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+            # avgTd 평균 이슬점온도
+        except TypeError:
+            avgTd = -99
 
         try:
             minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
@@ -682,7 +712,7 @@ if (rescode == 200):
         if (float(sumRn) > 0):
             sumRn = 1
 
-        weather5[index] = [str(date), avgTa, minTa, maxTa, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
+        weather5[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
 
         date = date + td.Timedelta(days = 1)
 
@@ -692,9 +722,9 @@ from sklearn.model_selection import cross_val_score, cross_validate
 import numpy as np
 
 weather = np.vstack((weather, weather2, weather3, weather4, weather5))
-weather = np.array(weather)
-x = weather[1:, 1:15]
-y = weather[1:, 15]
+
+x = weather[1:, 1:16]
+y = weather[1:, 16]
 
 x = x.astype(np.float64)
 y = y.astype(np.float64)
@@ -751,6 +781,12 @@ try:
     # maxTa 최고 기온
 except TypeError:
     maxTa = -99
+
+try:
+    avgTd = rDD['response']['body']['items']['item']['avgTd']
+    # avgTd 평균 이슬점온도
+except TypeError:
+    avgTd = -99
 
 try:
     minRhm = rDD['response']['body']['items']['item']['minRhm']
@@ -818,7 +854,7 @@ try:
 except TypeError:
     n99Rn = -99
 
-answerX = [[avgTa, minTa, maxTa, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
+answerX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
 
 from sklearn.linear_model import LogisticRegression
 
