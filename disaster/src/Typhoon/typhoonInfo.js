@@ -8,14 +8,8 @@ const DisasterInfo = () => {
                 <div className="transbox"></div>
                 <div className="infowhitebox oneline">
                     <div className="explain">
-                        <p className="infomainfont">디비 정보</p>
-                        <p className="infosubfont">뽑기</p>
-                        <p className="infomainfont">디비</p>
-                        <p className="infosubfont">뽑기</p>
-                        <p className="infomainfont">디비</p>
-                        <p className="infosubfont">뽑기</p>
-                        <p className="infomainfont">디비</p>
-                        <p className="infosubfont">뽑기</p>
+                        <p className="infomainfont">태풍이 발생할 확률</p>
+                        <p className="infosubfont">p</p>
                     </div>
                 </div>
             </div>
