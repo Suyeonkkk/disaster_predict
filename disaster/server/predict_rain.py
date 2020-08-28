@@ -735,14 +735,14 @@ x_scaled = scaler.fit_transform(x)
 x_train, x_test, y_train, y_test = train_test_split(x_scaled, y)
 
 # decision Tree
-from sklearn.tree import DecisionTreeClassifier
+# from sklearn.tree import DecisionTreeClassifier
 
-decision = DecisionTreeClassifier(max_depth = 4, random_state = 0)
-decision.fit(x_train, y_train)
-print("Decision Tree test data accuracy: ", format(decision.score(x_test, y_test)))
+# decision = DecisionTreeClassifier(max_depth = 4, random_state = 0)
+# decision.fit(x_train, y_train)
+# print("Decision Tree test data accuracy: ", format(decision.score(x_test, y_test)))
 
-scores = cross_val_score(decision, x_scaled, y, cv = 5)
-print("Decision Tree scores: ", scores.mean())
+# scores = cross_val_score(decision, x_scaled, y, cv = 5)
+# print("Decision Tree scores: ", scores.mean())
 
 date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
 url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \

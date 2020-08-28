@@ -414,7 +414,7 @@ if (rescode == 200):
         date = date + td.Timedelta(days=1)
 weather = np.vstack((weather, weather2, weather3, weather4, weather5))
 
-csv = pd.read_csv('C:/Users/user1/Documents/disaster_predict/disaster/server/typhoon.csv', encoding = 'CP949')
+csv = pd.read_csv('./typhoon.csv', encoding = 'CP949')
 csv = csv[['start', 'end']]
 
 size = len(weather)
@@ -576,20 +576,20 @@ answerX = scaler.transform(answerX)
 answerY = log.predict_proba(answerX)
 print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2)) + "% 입니다.")
 
-from flask import Flask, request, jsonify, render_template
+# from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-@app.route("/")
-def hello():                           
-    return "<h1>Hello World!</h1>"
+# @app.route("/")
+# def hello():                           
+#     return "<h1>Hello World!</h1>"
 
-@app.route('/TyphoonInfo')
-def predict_typhoon():
-    answer = (str(round(answerY[0, 1] * 100, 2)))
-    return "<p>" + answer + "</p>"
+# @app.route('/TyphoonInfo')
+# def predict_typhoon():
+#     answer = (str(round(answerY[0, 1] * 100, 2)))
+#     return "<p>" + answer + "</p>"
 
-if __name__ == '__main__':
-    app.run(host = '127.0.0.1', port = 5000)
+# if __name__ == '__main__':
+#     app.run(host = '127.0.0.1', port = 5000)
 
 # venv\Scripts\activate
