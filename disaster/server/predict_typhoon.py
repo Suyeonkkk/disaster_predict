@@ -578,6 +578,7 @@ print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2
 # ss
 # from flask import Flask, request, jsonify, render_template
 
+<<<<<<< HEAD
 # app = Flask(__name__)
 
 # @app.route("/")
@@ -589,6 +590,21 @@ print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2
 #     answer = (str(round(answerY[0, 1] * 100, 2)))
 #     return "<p>" + answer + "</p>"
 
+=======
+# from flask import Flask, request, jsonify, render_template
+
+# app = Flask(__name__)
+
+# @app.route("/")
+# def hello():                           
+#     return "<h1>Hello World!</h1>"
+
+# @app.route('/TyphoonInfo')
+# def predict_typhoon():
+#     answer = (str(round(answerY[0, 1] * 100, 2)))
+#     return "<p>" + answer + "</p>"
+
+>>>>>>> d19044e4eb67720b901c98860b622d552844fa5e
 # if __name__ == '__main__':
 #     app.run(host = '127.0.0.1', port = 5000)
 
