@@ -575,7 +575,7 @@ answerX = scaler.transform(answerX)
 
 answerY = log.predict_proba(answerX)
 print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2)) + "% 입니다.")
- 
+# ss
 # from flask import Flask, request, jsonify, render_template
 
 # app = Flask(__name__)
