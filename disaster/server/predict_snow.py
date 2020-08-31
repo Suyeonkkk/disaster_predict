@@ -757,3 +757,17 @@ answerX = scaler.transform(answerX)
 
 answerY = log.predict_proba(answerX)
 print("오늘 눈이 올 확률은 " + str(round(answerY[0, 1] * 100, 2)) + "% 입니다.")
+
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/Snow')
+def predict_typhoon():
+    answer = (str(round(answerY[0, 1] * 100, 2)))
+    return {'data': answer}
+
+if __name__ == '__main__':
+    app.run()

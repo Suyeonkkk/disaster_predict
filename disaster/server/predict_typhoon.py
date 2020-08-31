@@ -461,52 +461,52 @@ x_train, x_test, y_train, y_test = train_test_split(x_scaled, y)
 # decision Tree
 from sklearn.tree import DecisionTreeClassifier
 
-# decision = DecisionTreeClassifier(max_depth = 4, random_state = 0)
-# decision.fit(x_train, y_train)
-# print("Decision Tree test data accuracy: ", format(decision.score(x_test, y_test)))
+decision = DecisionTreeClassifier(max_depth = 4, random_state = 0)
+decision.fit(x_train, y_train)
+print("Decision Tree test data accuracy: ", format(decision.score(x_test, y_test)))
 
-# scores = cross_val_score(decision, x_scaled, y, cv = 5)
-# print("Decision Tree scores: ", scores.mean())
+scores = cross_val_score(decision, x_scaled, y, cv = 5)
+print("Decision Tree scores: ", scores.mean())
 
-# # K-NN
-# from sklearn.neighbors import KNeighborsClassifier
+# K-NN
+from sklearn.neighbors import KNeighborsClassifier
 
-# nearest = KNeighborsClassifier(n_neighbors = 3)
-# nearest.fit(x_train, y_train)
-# print("KNN test data accuracy: ", format(nearest.score(x_test, y_test)))
+nearest = KNeighborsClassifier(n_neighbors = 3)
+nearest.fit(x_train, y_train)
+print("KNN test data accuracy: ", format(nearest.score(x_test, y_test)))
 
-# scores = cross_val_score(nearest, x_scaled, y, cv = 5)
-# print("KNN scores: ", scores.mean())
+scores = cross_val_score(nearest, x_scaled, y, cv = 5)
+print("KNN scores: ", scores.mean())
 
-# # SVM
-# import sklearn.svm as svm
+# SVM
+import sklearn.svm as svm
 
-# svm_clf = svm.SVC(kernel = 'rbf')
-# svm_clf.fit(x_train, y_train)
-# print("SVM test data accuracy: ", format(svm_clf.score(x_test, y_test)))
+svm_clf = svm.SVC(kernel = 'rbf')
+svm_clf.fit(x_train, y_train)
+print("SVM test data accuracy: ", format(svm_clf.score(x_test, y_test)))
 
-# scores = cross_val_score(svm_clf, x_scaled, y, cv = 5)
-# print("SVM scores: ", scores.mean())
+scores = cross_val_score(svm_clf, x_scaled, y, cv = 5)
+print("SVM scores: ", scores.mean())
 
-# # Logistic Regression
-# from sklearn.linear_model import LogisticRegression
+# Logistic Regression
+from sklearn.linear_model import LogisticRegression
 
-# log = LogisticRegression()
-# log.fit(x_train, y_train)
-# print("Logistic test data accuracy: ", format(log.score(x_test, y_test)))
+log = LogisticRegression()
+log.fit(x_train, y_train)
+print("Logistic test data accuracy: ", format(log.score(x_test, y_test)))
 
-# scores = cross_val_score(log, x_scaled, y, cv = 5)
-# print("Logistic scores: ", scores.mean())
+scores = cross_val_score(log, x_scaled, y, cv = 5)
+print("Logistic scores: ", scores.mean())
 
-# # Random Forest
-# from sklearn.ensemble import RandomForestClassifier
+# Random Forest
+from sklearn.ensemble import RandomForestClassifier
 
-# forest = RandomForestClassifier(n_estimators = 10)
-# forest.fit(x_train, y_train)
-# print("Random Forest test data accuracy: ", format(forest.score(x_test, y_test)))
+forest = RandomForestClassifier(n_estimators = 10)
+forest.fit(x_train, y_train)
+print("Random Forest test data accuracy: ", format(forest.score(x_test, y_test)))
 
-# scores = cross_val_score(forest, x_scaled, y, cv = 5)
-# print("Random Forest scores: ", scores.mean())
+scores = cross_val_score(forest, x_scaled, y, cv = 5)
+print("Random Forest scores: ", scores.mean())
 
 date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
 url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
@@ -575,37 +575,18 @@ answerX = scaler.transform(answerX)
 
 answerY = log.predict_proba(answerX)
 print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2)) + "% 입니다.")
-# ss
-# from flask import Flask, request, jsonify, render_template
 
-<<<<<<< HEAD
-# app = Flask(__name__)
 
-# @app.route("/")
-# def hello():                           
-#     return "<h1>Hello World!</h1>"
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 
-# @app.route('/TyphoonInfo')
-# def predict_typhoon():
-#     answer = (str(round(answerY[0, 1] * 100, 2)))
-#     return "<p>" + answer + "</p>"
+app = Flask(__name__)
+CORS(app)
 
-=======
-# from flask import Flask, request, jsonify, render_template
+@app.route('/Typhoon')
+def predict_typhoon():
+    answer = (str(round(answerY[0, 1] * 100, 2)))
+    return {'data': answer}
 
-# app = Flask(__name__)
-
-# @app.route("/")
-# def hello():                           
-#     return "<h1>Hello World!</h1>"
-
-# @app.route('/TyphoonInfo')
-# def predict_typhoon():
-#     answer = (str(round(answerY[0, 1] * 100, 2)))
-#     return "<p>" + answer + "</p>"
-
->>>>>>> d19044e4eb67720b901c98860b622d552844fa5e
-# if __name__ == '__main__':
-#     app.run(host = '127.0.0.1', port = 5000)
-
-# venv\Scripts\activate
+if __name__ == '__main__':
+    app.run()

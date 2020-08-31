@@ -23,17 +23,17 @@ const Header = () => {
                 <div className="rightside">
                     <div className="headfactor headbutton">
                         <Link to="/TyphoonInfo" className="none">
-                            <p className="height5">TyphoonInfo</p>
+                            <p className="height5">Typhoon Info</p>
                         </Link>
                     </div>
                     <div className="headfactor headbutton">
-                        <Link to="/SearchDate" className="none">
-                            <p className="height5">SearchDate</p>
+                        <Link to="/RainInfo" className="none">
+                            <p className="height5">Rain Info</p>
                         </Link>
                     </div>
                     <div className="headfactor headbutton">
-                        <Link to="/SearchRegion" className="none">
-                            <p className="height5">SearchRegion</p>
+                        <Link to="/SnowInfo" className="none">
+                            <p className="height5">Snow Info</p>
                         </Link>
                     </div>
                 </div>
