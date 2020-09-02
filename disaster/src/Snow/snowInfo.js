@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './typhoonInfo.css';
+import './snowInfo.css';
 
-class DisasterInfo extends Component {
+class SnowInfo extends Component {
     state = {
-        typhoon: '...',
+        snow: '...',
     }
 
     componentWillMount = () => {
@@ -13,11 +13,11 @@ class DisasterInfo extends Component {
     callAPI = async() => {
         var res = await this.call()
         console.log(res)
-        this.setState({typhoon:res.typhoon})
+        this.setState({snow:res.snow})
     }
 
     call = async() => {
-        return fetch('http://127.0.0.1:5000/Typhoon', {
+        return fetch('http://127.0.0.1:5000/Snow', {
             method: 'get',
             headers: {
                 'Accept': 'application/json', // eslint-disable-line quote-props
@@ -39,14 +39,14 @@ class DisasterInfo extends Component {
                     <div className="transbox"></div>
                     <div className="infowhitebox oneline">
                         <div className="explain">
-                            <p className="infomainfont">태풍이 발생할 확률</p>
-                            <p className="infosubfont">{this.state.typhoon}% 입니다.</p>
+                            <p className="infomainfont">눈이 내릴 확률</p>
+                            <p className="infosubfont">{this.state.snow}% 입니다.</p>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         );
     }
 }
 
-export default DisasterInfo;
+export default SnowInfo;

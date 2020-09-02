@@ -873,9 +873,9 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/Rain')
-def predict_typhoon():
+def predict_rain():
     answer = (str(round(answerY[0, 1] * 100, 2)))
     return {'data': answer}
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host = '127.0.0.1', port = 5000)
