@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './rainInfo.css';
+import '../disasterInfo.css';
 
-class RainInfo extends Component {
+class SnowInfo extends Component {
     state = {
-        rain: '...',
+        snow: '...',
     }
 
     componentWillMount = () => {
@@ -13,11 +13,11 @@ class RainInfo extends Component {
     callAPI = async() => {
         var res = await this.call()
         console.log(res)
-        this.setState({rain:res.rain})
+        this.setState({snow:res.snow})
     }
 
     call = async() => {
-        return fetch('http://127.0.0.1:5000/Rain', {
+        return fetch('http://127.0.0.1:5000/Snow', {
             method: 'get',
             headers: {
                 'Accept': 'application/json', // eslint-disable-line quote-props
@@ -39,8 +39,12 @@ class RainInfo extends Component {
                     <div className="transbox"></div>
                     <div className="infowhitebox oneline">
                         <div className="explain">
-                            <p className="infomainfont">비가 내릴 확률</p>
-                            <p className="infosubfont">{this.state.rain}% 입니다.</p>
+                            <p className="infomainfont">눈이 내릴 확률</p>
+                            <p className="infosubfont">{this.state.snow}% 입니다.</p>
+                            <p className='infosubfont'>이 확률은 기온, 습도, 가조시간, 구름양, 강수량 등을 이용하여 예측하였습니다.
+                            <br></br>
+                            <br></br>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -49,4 +53,4 @@ class RainInfo extends Component {
     }
 }
 
-export default RainInfo;
+export default SnowInfo;

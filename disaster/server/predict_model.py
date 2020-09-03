@@ -2016,7 +2016,7 @@ weather = np.vstack((weather, weather2, weather3, weather4, weather5))
 
 import pandas as pd
 
-csv = pd.read_csv('./typhoon.csv', encoding = 'CP949')
+csv = pd.read_csv('./typhoon.csv', encoding = 'UTF-8')
 csv = csv[['start', 'end']]
 
 size = len(weather)

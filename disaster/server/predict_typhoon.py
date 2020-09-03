@@ -414,7 +414,7 @@ if (rescode == 200):
         date = date + td.Timedelta(days=1)
 weather = np.vstack((weather, weather2, weather3, weather4, weather5))
 
-csv = pd.read_csv('./typhoon.csv', encoding = 'CP949')
+csv = pd.read_csv('./typhoon.csv', encoding = 'UTF-8')
 csv = csv[['start', 'end']]
 
 size = len(weather)

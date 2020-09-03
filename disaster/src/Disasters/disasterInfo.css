@@ -1,5 +1,13 @@
 .infowhitebox {
-    height: 30em;
+    height: 30%;
+    width: 80%;
+    background: white;
+    border-radius: 1em;
+    margin: 0 10%
+}
+
+.infowhitelongbox {
+    height: 80em;
     width: 80%;
     background: white;
     border-radius: 1em;
@@ -31,15 +39,18 @@
 }
 
 .transbox {
-    height: 7em;
+    height: 10%;
     width: 100%;
 }
 
 .explain {
     height: 24em;
     width: 55%;
-    float: right;
-    margin-top: 3em;
-    margin-bottom: 3em;
-    margin-right: 3em;
+    float: left;
+    margin: 3em;
+}
+
+.goButton {
+    border-radius: 2em;
+    border-color: white;
 }
