@@ -7,8 +7,9 @@ import numpy as np
 
 # Snow
 # 지점 코드 (default: 대전)
-locationCode = 133
+# 서울 108 인천 112 대구 143 대전 133 부산 159 울산 152 광주 156 제주도 184 
 
+locationCode = 133
 url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
       "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
       "&numOfRows=999" \
@@ -645,16 +646,6 @@ x_scaled = scaler.fit_transform(x)
 
 x_train, x_test, y_train, y_test = train_test_split(x_scaled, y)
 
-# decision Tree
-# from sklearn.tree import DecisionTreeClassifier
-
-# decision = DecisionTreeClassifier(max_depth = 4, random_state = 0)
-# decision.fit(x_train, y_train)
-# print("Decision Tree test data accuracy: ", format(decision.score(x_test, y_test)))
-
-# scores = cross_val_score(decision, x_scaled, y, cv = 5)
-# print("Decision Tree scores: ", scores.mean())
-
 date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
 url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
       "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
@@ -758,6 +749,123 @@ snowX = scaler.transform(snowX)
 
 snowY = log.predict_proba(snowX)
 print("오늘 눈이 올 확률은 " + str(round(snowY[0, 1] * 100, 2)) + "% 입니다.")
+
+locationCodeList = [108, 112, 143, 133, 159, 152, 156, 184]
+
+# Seoul
+def snowAnotherLocation(index):
+    date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
+    url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
+        "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
+        "&numOfRows=999" \
+        "&dataCd=ASOS" \
+        "&dateCd=DAY" \
+        "&startDt="+date+ \
+        "&endDt="+date+ \
+        "&stnIds=" + str(locationCodeList[index])
+
+    request = ul.Request(url)
+    response = ul.urlopen(request)
+    rescode = response.getcode()
+
+    if (rescode == 200):
+        responseData = response.read()
+        rD = xmltodict.parse(responseData)
+        rDJ = json.dumps(rD)
+        rDD = json.loads(rDJ)
+
+    try:
+        avgTa = rDD['response']['body']['items']['item']['avgTa']
+        # avgTa 평균 기온
+    except TypeError:
+        avgTa = -99
+
+    try:
+        minTa = rDD['response']['body']['items']['item']['minTa']
+        # minTa 최저 기온
+    except TypeError:
+        minTa = -99
+
+    try:
+        maxTa = rDD['response']['body']['items']['item']['maxTa']
+        # maxTa 최고 기온
+    except TypeError:
+        maxTa = -99
+
+    try:
+        avgTd = rDD['response']['body']['items']['item']['avgTd']
+        # avgTd 평균 이슬점온도
+    except TypeError:
+        avgTd = -99
+
+    try:
+        minRhm = rDD['response']['body']['items']['item']['minRhm']
+        # minRhm 최소 상대습도
+    except TypeError:
+        minRhm = -99
+
+    try:
+        avgRhm = rDD['response']['body']['items']['item']['avgRhm']
+        # avgRhm 평균 상대습도
+    except TypeError:
+        avgRhm = -99
+
+    try:
+        ssDur = rDD['response']['body']['items']['item']['ssDur']
+        # ssDur 가조시간
+    except TypeError:
+        ssDur = -99
+
+    try:
+        avgTca = rDD['response']['body']['items']['item']['avgTca']
+        # avgTca 평균 전운량
+    except TypeError:
+        avgTca = -99
+
+    try:
+        avgLmac = rDD['response']['body']['items']['item']['avgLmac']
+        # avgLmac 평균 중하층운량
+    except TypeError:
+        avgLmac = -99
+
+    try:
+        sumLrgEv = rDD['response']['body']['items']['item']['sumLrgEv']
+        # sumLrgEv 합계 대형증발량
+    except TypeError:
+        sumLrgEv = -99
+
+    try:
+        sumSmlEv = rDD['response']['body']['items']['item']['sumSmlEv']
+        # sumSmlEv 합계 소형증발량
+    except TypeError:
+        sumSmlEv = -99
+
+    try:
+        n99Rn = rDD['response']['body']['items']['item']['n99Rn']
+        # n99Rn 9-9 강수
+    except TypeError:
+        n99Rn = -99
+
+    snowX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
+
+    log = LogisticRegression()
+    log.fit(x_scaled, y)
+
+    snowX = scaler.transform(snowX)
+    temp = log.predict_proba(snowX)
+    return str(round(temp[0, 1] * 100, 2))
+
+snowLocation = []
+snowLocation.append(snowAnotherLocation(0))
+snowLocation.append(snowAnotherLocation(1))
+snowLocation.append(snowAnotherLocation(2))
+snowLocation.append(snowAnotherLocation(3))
+snowLocation.append(snowAnotherLocation(4))
+snowLocation.append(snowAnotherLocation(5))
+snowLocation.append(snowAnotherLocation(6))
+snowLocation.append(snowAnotherLocation(7))
+
+
 
 # Rain
 # 지점 코드 (default: 대전)
@@ -1605,6 +1713,147 @@ rainX = scaler.transform(rainX)
 rainY = log.predict_proba(rainX)
 print("오늘 비가 올 확률은 " + str(round(rainY[0, 1] * 100, 2)) + "% 입니다.")
 
+
+
+
+
+locationCodeList = [108, 112, 143, 133, 159, 152, 156, 184]
+
+def rainAnotherLocation(index):
+    date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
+    url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
+        "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
+        "&numOfRows=999" \
+        "&dataCd=ASOS" \
+        "&dateCd=DAY" \
+        "&startDt="+date+ \
+        "&endDt="+date+ \
+        "&stnIds=" + str(locationCodeList[index])
+
+    request = ul.Request(url)
+    response = ul.urlopen(request)
+    rescode = response.getcode()
+
+    if (rescode == 200):
+        responseData = response.read()
+        rD = xmltodict.parse(responseData)
+        rDJ = json.dumps(rD)
+        rDD = json.loads(rDJ)
+
+    try:
+        avgTa = rDD['response']['body']['items']['item']['avgTa']
+        # avgTa 평균 기온
+    except TypeError:
+        avgTa = -99
+
+    try:
+        minTa = rDD['response']['body']['items']['item']['minTa']
+        # minTa 최저 기온
+    except TypeError:
+        minTa = -99
+
+    try:
+        maxTa = rDD['response']['body']['items']['item']['maxTa']
+        # maxTa 최고 기온
+    except TypeError:
+        maxTa = -99
+
+    try:
+        avgTd = rDD['response']['body']['items']['item']['avgTd']
+        # avgTd 평균 이슬점온도
+    except TypeError:
+        avgTd = -99
+
+    try:
+        minRhm = rDD['response']['body']['items']['item']['minRhm']
+        # minRhm 최소 상대습도
+    except TypeError:
+        minRhm = -99
+
+    try:
+        avgRhm = rDD['response']['body']['items']['item']['avgRhm']
+        # avgRhm 평균 상대습도
+    except TypeError:
+        avgRhm = -99
+
+    try:
+        ssDur = rDD['response']['body']['items']['item']['ssDur']
+        # ssDur 가조시간
+    except TypeError:
+        ssDur = -99
+
+    try:
+        sumSsHr = rDD['response']['body']['items']['item']['sumSsHr']
+        # sumSsHr 합계 일조 시간
+    except TypeError:
+        sumSsHr = -99
+
+    try:
+        hr1MaxIcsr = rDD['response']['body']['items']['item']['hr1MaxIcsr']
+        # hr1MaxIcsr 1시간 최다 일사량
+    except TypeError:
+        hr1MaxIcsr = -99
+
+    try:
+        sumGsr = rDD['response']['body']['items']['item']['sumGsr']
+        # sumGsr 합계 일사
+    except TypeError:
+        sumGsr = -99
+
+    try:
+        avgTca = rDD['response']['body']['items']['item']['avgTca']
+        # avgTca 평균 전운량
+    except TypeError:
+        avgTca = -99
+
+    try:
+        avgLmac = rDD['response']['body']['items']['item']['avgLmac']
+        # avgLmac 평균 중하층운량
+    except TypeError:
+        avgLmac = -99
+
+    try:
+        sumLrgEv = rDD['response']['body']['items']['item']['sumLrgEv']
+        # sumLrgEv 합계 대형증발량
+    except TypeError:
+        sumLrgEv = -99
+
+    try:
+        sumSmlEv = rDD['response']['body']['items']['item']['sumSmlEv']
+        # sumSmlEv 합계 소형증발량
+    except TypeError:
+        sumSmlEv = -99
+
+    try:
+        n99Rn = rDD['response']['body']['items']['item']['n99Rn']
+        # n99Rn 9-9 강수
+    except TypeError:
+        n99Rn = -99
+
+    rainX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
+
+    log = LogisticRegression()
+    log.fit(x_scaled, y)
+
+    rainX = scaler.transform(rainX)
+    temp = log.predict_proba(rainX)
+    return str(round(temp[0, 1] * 100, 2))
+
+rainLocation = []
+rainLocation.append(rainAnotherLocation(0))
+rainLocation.append(rainAnotherLocation(1))
+rainLocation.append(rainAnotherLocation(2))
+rainLocation.append(rainAnotherLocation(3))
+rainLocation.append(rainAnotherLocation(4))
+rainLocation.append(rainAnotherLocation(5))
+rainLocation.append(rainAnotherLocation(6))
+rainLocation.append(rainAnotherLocation(7))
+
+
+
+
+
+
 # Typhoon
 url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
       "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
@@ -2132,6 +2381,7 @@ for i in range(0, 33):
     load.append(st)
 
 
+
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
@@ -2152,6 +2402,28 @@ def predict_rain():
 def predict_typhoon():
     typhoon = (str(round(typhoonY[0, 1] * 100, 2)))
     return {'typhoon': typhoon}
+
+@app.route('/SnowLocation')
+def predict_snowAnother():
+    return {'loc0': snowLocation[0],
+    'loc1': snowLocation[1],
+    'loc2': snowLocation[2],
+    'loc3': snowLocation[3],
+    'loc4': snowLocation[4],
+    'loc5': snowLocation[5],
+    'loc6': snowLocation[6],
+    'loc7': snowLocation[7]}
+
+@app.route('/RainLocation')
+def predict_rainAnother():
+    return {'loc0': rainLocation[0],
+    'loc1': rainLocation[1],
+    'loc2': rainLocation[2],
+    'loc3': rainLocation[3],
+    'loc4': rainLocation[4],
+    'loc5': rainLocation[5],
+    'loc6': rainLocation[6],
+    'loc7': rainLocation[7]}
 
 @app.route('/CSV')
 def lookup_csv():

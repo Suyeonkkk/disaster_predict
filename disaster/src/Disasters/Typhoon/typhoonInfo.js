@@ -41,8 +41,10 @@ class TyphoonInfo extends Component {
                     <div className="infowhitebox oneline">
                         <div className="explain">
                             <p className="infomainfont">태풍이 발생할 확률</p>
-                            <p className="infosubfont">{this.state.typhoon}% 입니다.</p>
+                            <p className="infosubfont"><b>{this.state.typhoon}%</b> 입니다.</p>
                             <p className='infosubfont'>이 확률은 제주도 지역의 습도, 해면 기압, 풍속, 강수량 등을 이용하여 예측하였습니다.
+                            <br></br>
+                            <br></br>
                             <br></br>
                             <br></br></p>
                             <Link to='/TyphoonHistory'>

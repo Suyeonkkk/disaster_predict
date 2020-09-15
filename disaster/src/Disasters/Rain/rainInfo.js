@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom"
 import '../disasterInfo.css';
 
 class RainInfo extends Component {
@@ -40,8 +41,19 @@ class RainInfo extends Component {
                     <div className="infowhitebox oneline">
                         <div className="explain">
                             <p className="infomainfont">비가 내릴 확률</p>
-                            <p className="infosubfont">{this.state.rain}% 입니다.</p>
-                            <p className='infosubfont'>이 확률은 기온, 습도, 가조시간, 구름양, 강수량 등을 이용하여 예측하였습니다.</p>
+                            <p className="infosubfont"><b>{this.state.rain}%</b> 입니다.</p>
+                            <p className='infosubfont'>이 확률은 기온, 습도, 가조시간, 구름양, 강수량 등을 이용하여 예측하였습니다.
+                            <br></br>
+                            <br></br>
+                            위의 지역은 기본 설정 값인 대전의 날씨를 예측한 정보입니다.
+                            <br></br>
+                            <br></br>
+                            <br></br></p>
+                            <Link to='/RainLocation'>
+                                <button  className='goButton'>
+                                    다른 지역에서 비가 내릴 확률 보기
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
