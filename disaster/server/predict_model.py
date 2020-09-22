@@ -129,6 +129,9 @@ if (rescode == 200):
             # ddMefs 일 최심신적설
         except TypeError:
             ddMefs = -99
+
+        if (ddMefs is None):
+            ddMefs = 0
         if (float(ddMefs) > 0):
             ddMefs = 1
 
@@ -252,6 +255,9 @@ if (rescode == 200):
             # ddMefs 일 최심신적설
         except TypeError:
             ddMefs = -99
+
+        if (ddMefs is None):
+            ddMefs = 0
         if (float(ddMefs) > 0):
             ddMefs = 1
 
@@ -375,6 +381,9 @@ if (rescode == 200):
             # ddMefs 일 최심신적설
         except TypeError:
             ddMefs = -99
+
+        if (ddMefs is None):
+            ddMefs = 0
         if (float(ddMefs) > 0):
             ddMefs = 1
 
@@ -498,6 +507,9 @@ if (rescode == 200):
             # ddMefs 일 최심신적설
         except TypeError:
             ddMefs = -99
+
+        if (ddMefs is None):
+            ddMefs = 0
         if (float(ddMefs) > 0):
             ddMefs = 1
 
@@ -622,6 +634,9 @@ if (rescode == 200):
             # ddMefs 일 최심신적설
         except TypeError:
             ddMefs = -99
+
+        if (ddMefs is None):
+            ddMefs = 0
         if (float(ddMefs) > 0):
             ddMefs = 1
 
@@ -746,7 +761,6 @@ log = LogisticRegression()
 log.fit(x_scaled, y)
 
 snowX = scaler.transform(snowX)
-
 snowY = log.predict_proba(snowX)
 print("오늘 눈이 올 확률은 " + str(round(snowY[0, 1] * 100, 2)) + "% 입니다.")
 
@@ -2379,8 +2393,6 @@ for i in range(0, 33):
     for j in range(0, 4):
         st += (str(csv.iat[i, j]) + '\t')
     load.append(st)
-
-
 
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
