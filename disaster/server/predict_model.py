@@ -757,10 +757,13 @@ snowX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, su
 
 from sklearn.linear_model import LogisticRegression
 
+np.nan_to_num(x_scaled, copy=False)
+
 log = LogisticRegression()
 log.fit(x_scaled, y)
 
 snowX = scaler.transform(snowX)
+np.nan_to_num(snowX, copy=False)
 snowY = log.predict_proba(snowX)
 print("오늘 눈이 올 확률은 " + str(round(snowY[0, 1] * 100, 2)) + "% 입니다.")
 
@@ -862,10 +865,14 @@ def snowAnotherLocation(index):
 
     snowX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
 
+    np.nan_to_num(x_scaled, copy=False)
+
     log = LogisticRegression()
     log.fit(x_scaled, y)
 
     snowX = scaler.transform(snowX)
+    
+    np.nan_to_num(snowX, copy=False)
     temp = log.predict_proba(snowX)
     return str(round(temp[0, 1] * 100, 2))
 
@@ -1719,11 +1726,13 @@ except TypeError:
 
 rainX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
 
+np.nan_to_num(x_scaled, copy=False)
+
 log = LogisticRegression()
 log.fit(x_scaled, y)
 
 rainX = scaler.transform(rainX)
-
+np.nan_to_num(rainX, copy=False)
 rainY = log.predict_proba(rainX)
 print("오늘 비가 올 확률은 " + str(round(rainY[0, 1] * 100, 2)) + "% 입니다.")
 
@@ -1846,10 +1855,14 @@ def rainAnotherLocation(index):
 
     rainX = [[avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn]]
 
+    np.nan_to_num(x_scaled, copy=False)
+
     log = LogisticRegression()
     log.fit(x_scaled, y)
 
     rainX = scaler.transform(rainX)
+    
+    np.nan_to_num(rainX, copy=False)
     temp = log.predict_proba(rainX)
     return str(round(temp[0, 1] * 100, 2))
 
@@ -2377,10 +2390,11 @@ except TypeError:
 typhoonX = [[avgRhm, avgPs, avgPa, avgWs, sumRn, avgTa]]
 
 log = LogisticRegression()
+np.nan_to_num(x_scaled, copy=False)
 log.fit(x_scaled, y)
 
 typhoonX = scaler.transform(typhoonX)
-
+np.nan_to_num(typhoonX, copy=False)
 typhoonY = log.predict_proba(typhoonX)
 print("오늘 태풍이 발생할 확률은 " + str(round(typhoonY[0, 1] * 100, 2)) + "% 입니다.")
 

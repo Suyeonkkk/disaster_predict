@@ -15,30 +15,15 @@ def typhoonPredict(dateStart, dateEnd):
       "&startDt="+dateStart+ \
       "&endDt="+dateEnd+ \
       "&stnIds=184"
-    # 데이터를 받을 url
-
     request = ul.Request(url)
-    # url의 데이터를 요청함
-
     response = ul.urlopen(request)
-    # 요청받은 데이터를 열어줌
-
     rescode = response.getcode()
-    # 제대로 데이터가 수신됐는지 확인하는 코드 성공시 200
-
     if (rescode == 200):
         responseData = response.read()
-        # 요청받은 데이터를 읽음
-
         rD = xmltodict.parse(responseData)
-        # XML형식의 데이터를 dict형식으로 변환시켜줌
-
         rDJ = json.dumps(rD)
-        # dict 형식의 데이터를 json형식으로 변환
-
         rDD = json.loads(rDJ)
-        # json형식의 데이터를 dict 형식으로 변환
-
+        
         size = int(rDD['response']['body']['totalCount'])
         if (size != 1):
             weather = [[0] * 8] * (size)
@@ -183,16 +168,29 @@ log = LogisticRegression()
 log.fit(x_train, y_train)
 print("Logistic test data accuracy: ", format(log.score(x_test, y_test)))
 
+# Decision Tree
+from sklearn.tree import DecisionTreeClassifier
+
+decision = DecisionTreeClassifier(max_depth = 4, random_state = 0)
+decision.fit(x_train, y_train)
+print("Decision Tree test data accuracy: ", format(decision.score(x_test, y_test)))
+
+# Random Forest
+from sklearn.ensemble import RandomForestClassifier
+
+forest = RandomForestClassifier(max_depth=2, random_state=0)
+forest.fit(x_train, y_train)
+print("Random Forest test data accuracy: ", format(forest.score(x_test, y_test)))
+
+
+
 date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
 answerX = typhoonPredict(date, date)
-
-from sklearn.linear_model import LogisticRegression
 
 log = LogisticRegression()
 log.fit(x_scaled, y)
 
 answerX = scaler.transform(answerX)
-
 answerY = log.predict_proba(answerX)
 print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2)) + "% 입니다.")
 

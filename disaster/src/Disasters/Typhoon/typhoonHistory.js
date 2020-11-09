@@ -102,8 +102,17 @@ class TyphoonHistory extends Component {
                     <div className="infowhitelongbox oneline">
                         <div className="explain">
                             <p className="infomainfont">태풍 발생 이력
-                            <br></br>
-                            <br></br></p>
+                                <br></br>
+                            </p>
+                            <form>
+                                <p>
+                                    <input type="date"></input>
+                                    . 
+                                    <input type="date"></input>
+                                    .
+                                    <input type="submit" value="Submit"></input>
+                                </p>
+                            </form>
                             <p className='infosubfont'>{this.state.load1}</p>
                             <p className='infosubfont'>{this.state.load2}</p>
                             <p className='infosubfont'>{this.state.load3}</p>

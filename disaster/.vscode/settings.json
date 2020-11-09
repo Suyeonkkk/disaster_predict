@@ -1,4 +1,9 @@
 {
-    "python.pythonPath": "C:\\Python\\python.exe",
-    "git.ignoreLimitWarning": true
+    "python.pythonPath": "C:\\Users\\tnehd\\.msvscode.hdinsight\\hdinsightJupyter\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true,
+    "python.dataScience.jupyterLaunchTimeout": 240000,
+    "editor.formatOnSave": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
