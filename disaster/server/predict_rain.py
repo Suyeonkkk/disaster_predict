@@ -6,9 +6,6 @@ import timedelta as td
 import numpy as np
 import pandas as pd
 
-# 지점 코드 (default: 대전)
-locationCode = 133
-
 def data_rain(start, end, location):
     url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
         "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
@@ -253,7 +250,6 @@ date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
 rainX = data_rain(date, date, 133)
 rainX = np.array(rainX)
 rainX = rainX[0, 1:16]
-print(rainX)
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler

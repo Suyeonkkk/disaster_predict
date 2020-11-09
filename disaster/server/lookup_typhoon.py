@@ -7,7 +7,7 @@ load = []
 for i in range(0, 33):
     st = ''
     for j in range(0, 4):
-        st += (str(csv.iat[i, j]) + '\t')
+        st += (str(csv.iat[i, j]) + ' ')
     load.append(st)
 
 print(load[30])
@@ -20,7 +20,8 @@ CORS(app)
 
 @app.route('/CSV')
 def lookup_csv():
-    return {'load1': load[1]
+    return {'load0': load[0]
+    , 'load1': load[1]
     , 'load2': load[2]
     , 'load3': load[3]
     , 'load4': load[4]

@@ -1,26 +1,13 @@
-from math import pi
+import pandas as pd
 
-def area_ellipse(radius_x: float, radius_y: float) -> float:
-    """
-    Calculate the area of a ellipse
+csv = pd.read_csv('./typhoon.csv', encoding = 'UTF-8')
+csv = csv[['한글태풍명', '영문태풍명', '발생일시', '소멸일시']]
 
-    >>> area_ellipse(10, 10)
-    314.1592653589793
-    >>> area_ellipse(10, 20)
-    628.3185307179587
-    >>> area_ellipse(-10, 20)
-    Traceback (most recent call last):
-        ...
-    ValueError: area_ellipse() only accepts non-negative values
-    >>> area_ellipse(10, -20)
-    Traceback (most recent call last):
-        ...
-    ValueError: area_ellipse() only accepts non-negative values
-    >>> area_ellipse(-10, -20)
-    Traceback (most recent call last):
-        ...
-    ValueError: area_ellipse() only accepts non-negative values
-    """
-    if radius_x < 0 or radius_y < 0:
-        raise ValueError("area_ellipse() only accepts non-negative values")
-    return pi * radius_x * radius_y
+load = []
+for i in range(0, 33):
+    st = ''
+    for j in range(0, 4):
+        st += (str(csv.iat[i, j]) + '\t')
+    load.append(st)
+
+print(load)

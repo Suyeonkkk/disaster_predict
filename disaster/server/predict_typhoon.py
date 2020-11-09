@@ -182,19 +182,16 @@ forest = RandomForestClassifier(max_depth=2, random_state=0)
 forest.fit(x_train, y_train)
 print("Random Forest test data accuracy: ", format(forest.score(x_test, y_test)))
 
-
-
 date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
-answerX = typhoonPredict(date, date)
+typhoonX = typhoonPredict(date, date)
 
 log = LogisticRegression()
 log.fit(x_scaled, y)
 
-answerX = scaler.transform(answerX)
-answerY = log.predict_proba(answerX)
-print("오늘 태풍이 발생할 확률은 " + str(round(answerY[0, 1] * 100, 2)) + "% 입니다.")
+typhoonX = scaler.transform(typhoonX)
+typhoonY = log.predict_proba(typhoonX)
+print("오늘 태풍이 발생할 확률은 " + str(round(typhoonY[0, 1] * 100, 2)) + "% 입니다.")
 
-"""
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
@@ -203,9 +200,8 @@ CORS(app)
 
 @app.route('/Typhoon')
 def predict_typhoon():
-    answer = (str(round(answerY[0, 1] * 100, 2)))
+    answer = (str(round(typhoonY[0, 1] * 100, 2)))
     return {'data': answer}
 
 if __name__ == '__main__':
     app.run(host = '127.0.0.1', port = 5000)
-"""
