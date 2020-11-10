@@ -547,69 +547,64 @@ date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
 
 # snow
 
-# weather = data_snow(20120101, 20131231, 133)
-# weather2 = data_snow(20140101, 20151231, 133)
-# weather3 = data_snow(20160101, 20171231, 133)
-# weather4 = data_snow(20180101, 20191231, 133)
-# weather = np.vstack((weather, weather2, weather3, weather4))
-# weather = pd.DataFrame(weather)
-# weather.dropna(inplace = True)
+weather = data_snow(20120101, 20131231, 133)
+weather2 = data_snow(20140101, 20151231, 133)
+weather3 = data_snow(20160101, 20171231, 133)
+weather4 = data_snow(20180101, 20191231, 133)
+weather = np.vstack((weather, weather2, weather3, weather4))
+weather = pd.DataFrame(weather)
+weather.dropna(inplace = True)
 
-# x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]]
-# y = weather[[12]]
+x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]]
+y = weather[[12]]
 
-# x = x.astype(np.float64)
-# y = y.astype(np.float64)
+x = x.astype(np.float64)
+y = y.astype(np.float64)
 
-# scaler = StandardScaler()
-# x_scaled = scaler.fit_transform(x)
+scaler = StandardScaler()
+x_scaled = scaler.fit_transform(x)
 
-# log = LogisticRegression()
-# log.fit(x_scaled, y.values.ravel())
+log = LogisticRegression()
+log.fit(x_scaled, y.values.ravel())
 
-# snowLocation = []
-# for index in locationCodeList:
-#     snowX = np.array(data_snow(date, date, index))
-#     snowX = np.nan_to_num(snowX[0, 1:12])
-    
-#     print(snowLocation)
-#     print(snowX)
-#     snowX = scaler.transform(snowX.reshape(1, -1))
-#     snowY = log.predict_proba(snowX)
-#     snowLocation.append(str(round(snowY[0, 1] * 100, 2)))
+snowLocation = []
+for index in locationCodeList:
+    snowX = np.array(data_snow(date, date, index))
+    snowX = np.nan_to_num(snowX[0, 1:12])
+
+    snowX = scaler.transform(snowX.reshape(1, -1))
+    snowY = log.predict_proba(snowX)
+    snowLocation.append(str(round(snowY[0, 1] * 100, 2)))
 
 # # rain
 
-# weather = data_rain(20120101, 20131231, 133)
-# weather2 = data_rain(20140101, 20151231, 133)
-# weather3 = data_rain(20160101, 20171231, 133)
-# weather4 = data_rain(20180101, 20191231, 133)
-# weather = np.vstack((weather, weather2, weather3, weather4))
-# weather = pd.DataFrame(weather)
-# weather.dropna(inplace = True)
+weather = data_rain(20120101, 20131231, 133)
+weather2 = data_rain(20140101, 20151231, 133)
+weather3 = data_rain(20160101, 20171231, 133)
+weather4 = data_rain(20180101, 20191231, 133)
+weather = np.vstack((weather, weather2, weather3, weather4))
+weather = pd.DataFrame(weather)
+weather.dropna(inplace = True)
 
-# x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]]
-# y = weather[[16]]
+x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]]
+y = weather[[16]]
 
-# x = x.astype(np.float64)
-# y = y.astype(np.float64)
+x = x.astype(np.float64)
+y = y.astype(np.float64)
 
-# scaler = StandardScaler()
-# x_scaled = scaler.fit_transform(x)
+scaler = StandardScaler()
+x_scaled = scaler.fit_transform(x)
 
-# log = LogisticRegression()
-# log.fit(x_scaled, y.values.ravel())
+log = LogisticRegression()
+log.fit(x_scaled, y.values.ravel())
 
-# rainLocation = []
-# for index in locationCodeList:
-#     rainX = np.array(data_rain(date, date, index))
-#     rainX = np.nan_to_num(rainX[0, 1:16])
-    
-#     print(rainLocation)
-#     print(rainX)
-#     rainX = scaler.transform(rainX.reshape(1, -1))
-#     rainY = log.predict_proba(rainX)
-#     rainLocation.append(str(round(rainY[0, 1] * 100, 2)))
+rainLocation = []
+for index in locationCodeList:
+    rainX = np.array(data_rain(date, date, index))
+    rainX = np.nan_to_num(rainX[0, 1:16])
+    rainX = scaler.transform(rainX.reshape(1, -1))
+    rainY = log.predict_proba(rainX)
+    rainLocation.append(str(round(rainY[0, 1] * 100, 2)))
 
 # typhoon
 

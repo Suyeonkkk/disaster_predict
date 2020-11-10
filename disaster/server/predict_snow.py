@@ -6,9 +6,6 @@ import datetime as dt
 import timedelta as td
 import numpy as np
 
-# 지점 코드 (default: 대전)
-locationCode = 133
-
 def data_snow(start, end, location):
     url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
         "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \

@@ -127,11 +127,11 @@ class TyphoonHistory extends Component {
                             </p>
                             <form>
                                 <p>
-                                    <input type="date"></input>
+                                    <input type="date" id="startDate"></input>
                                     .
-                                    <input type="date"></input>
+                                    <input type="date" id="endDate"></input>
                                     .
-                                    <input type="submit" value="Submit"></input>
+                                    <input type="submit" value="조회" onClick={this.search}></input>
                                 </p>
                             </form>
                             <table className="typhoonTable">
@@ -143,9 +143,9 @@ class TyphoonHistory extends Component {
                                         <th className="infomainfont">소멸일시</th>
                                     </tr>
                                 </thead>
-                                <tbody className="infosubfont">
+                                <tbody className="infosubfont" id="table">
                                     <tr>
-                                        <td id="11"></td>
+                                        <td id="11">Load...</td>
                                         <td id="12"></td>
                                         <td id="13"></td>
                                         <td id="14"></td>
@@ -343,6 +343,26 @@ class TyphoonHistory extends Component {
                 </div>
             </div>
         );
+    }
+
+    search() {
+        var start = document.getElementById("startDate").value.replaceAll('-', '').trim();
+        var end = document.getElementById("endDate").value.replaceAll('-', '').trim();
+        start *= 1;
+        end *= 1;
+        var td = document.getElementsByTagName("td");
+        for (var i = 0; i < 32; i++) {
+            var temp = td[4 * i + 2].innerText.split(' ')[0].replaceAll('.', '').trim();
+            temp *= 1;
+            if (temp < start) {
+                td[4 * i].style.display = 'none';
+                td[4 * i + 1].style.display = 'none';
+                td[4 * i + 2].style.display = 'none';
+                td[4 * i + 3].style.display = 'none';
+            } else {
+                // alert("조회 시작 버튼이 더 작음");
+            }
+        }
     }
 }
 
