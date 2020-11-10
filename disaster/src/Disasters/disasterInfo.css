@@ -7,7 +7,7 @@
 }
 
 .infowhitelongbox {
-    height: 80em;
+    height: 62em;
     width: 80%;
     background: white;
     border-radius: 1em;
@@ -66,4 +66,5 @@
 
 .typhoonTable {
     width: 90%;
+    border-spacing: 0px;
 }

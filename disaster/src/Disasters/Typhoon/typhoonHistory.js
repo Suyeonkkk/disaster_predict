@@ -145,7 +145,7 @@ class TyphoonHistory extends Component {
                                 </thead>
                                 <tbody className="infosubfont" id="table">
                                     <tr>
-                                        <td id="11">Load...</td>
+                                        <td id="11"></td>
                                         <td id="12"></td>
                                         <td id="13"></td>
                                         <td id="14"></td>
@@ -345,22 +345,46 @@ class TyphoonHistory extends Component {
         );
     }
 
-    search() {
+    search(e) {
+        e.returnValue = true;
+        e.preventDefault();
         var start = document.getElementById("startDate").value.replaceAll('-', '').trim();
         var end = document.getElementById("endDate").value.replaceAll('-', '').trim();
+
+        if (end === "") {
+            end = 99999999;
+        }
+        if (start === "") {
+            start = 11111111;
+        }
+        if (start > end) {
+            alert("조회하려는 시작날짜가 더 느립니다 !");
+            window.location.reload();
+        }
         start *= 1;
         end *= 1;
         var td = document.getElementsByTagName("td");
         for (var i = 0; i < 32; i++) {
             var temp = td[4 * i + 2].innerText.split(' ')[0].replaceAll('.', '').trim();
             temp *= 1;
-            if (temp < start) {
+            if (start <= temp && temp <= end) {
+                td[4 * i].style.display = '';
+                td[4 * i + 1].style.display = '';
+                td[4 * i + 2].style.display = '';
+                td[4 * i + 3].style.display = '';
+                td[4 * i].style.borderSpacing = 2;
+                td[4 * i + 1].style.display = 2;
+                td[4 * i + 2].style.display = 2;
+                td[4 * i + 3].style.display = 2;
+            } else {
                 td[4 * i].style.display = 'none';
                 td[4 * i + 1].style.display = 'none';
                 td[4 * i + 2].style.display = 'none';
                 td[4 * i + 3].style.display = 'none';
-            } else {
-                // alert("조회 시작 버튼이 더 작음");
+                td[4 * i].style.borderSpacing = 0;
+                td[4 * i + 1].style.display = 0;
+                td[4 * i + 2].style.display = 0;
+                td[4 * i + 3].style.display = 0;
             }
         }
     }
