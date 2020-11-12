@@ -12,7 +12,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
-def data_snow(start, end, location):
+# 지점 코드
+# 서울 인천 대구 대전 부산 울산 광주 제주 순서
+locationList = [108, 112, 143, 133, 159, 152, 156, 184]
+heightList = [0.7969, 0.6153, 1.3230, 0.7922, 1.1715, 2.1346, 1.2644, 0.5202]
+date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
+
+def data_snow(start, end, index):
     url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
         "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
         "&numOfRows=999" \
@@ -20,7 +26,7 @@ def data_snow(start, end, location):
         "&dateCd=DAY" \
         "&startDt=" + str(start) + \
         "&endDt=" + str(end) + \
-        "&stnIds=" + str(location)
+        "&stnIds=" + str(locationList[index])
     request = ul.Request(url)
     response = ul.urlopen(request)
     rescode = response.getcode()
@@ -33,11 +39,11 @@ def data_snow(start, end, location):
         rDD = json.loads(rDJ)
 
         size = int(rDD['response']['body']['totalCount'])
-        weather = [[0] * 13] * (size)
+        weather = [[0] * 14] * (size)
         date = str(start)
         date = dt.datetime(int(date[0:4]), int(date[4:6]), int(date[6:8])).date()
 
-        for index in range(0, size):
+        for i in range(0, size):
             if (size == 1):
                 try:
                     avgTa = rDD['response']['body']['items']['item']['avgTa']
@@ -120,73 +126,73 @@ def data_snow(start, end, location):
                     ddMefs = 1
             else:
                 try:
-                    avgTa = rDD['response']['body']['items']['item'][index]['avgTa']
+                    avgTa = rDD['response']['body']['items']['item'][i]['avgTa']
                     # avgTa 평균 기온
                 except TypeError:
                     avgTa = -99
 
                 try:
-                    minTa = rDD['response']['body']['items']['item'][index]['minTa']
+                    minTa = rDD['response']['body']['items']['item'][i]['minTa']
                     # minTa 최저 기온
                 except TypeError:
                     minTa = -99
 
                 try:
-                    maxTa = rDD['response']['body']['items']['item'][index]['maxTa']
+                    maxTa = rDD['response']['body']['items']['item'][i]['maxTa']
                     # maxTa 최고 기온
                 except TypeError:
                     maxTa = -99
 
                 try:
-                    avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+                    avgTd = rDD['response']['body']['items']['item'][i]['avgTd']
                     # avgTd 평균 이슬점온도
                 except TypeError:
                     avgTd = -99
 
                 try:
-                    minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
+                    minRhm = rDD['response']['body']['items']['item'][i]['minRhm']
                     # minRhm 최소 상대습도
                 except TypeError:
                     minRhm = -99
 
                 try:
-                    avgRhm = rDD['response']['body']['items']['item'][index]['avgRhm']
+                    avgRhm = rDD['response']['body']['items']['item'][i]['avgRhm']
                     # avgRhm 평균 상대습도
                 except TypeError:
                     avgRhm = -99
 
                 try:
-                    ssDur = rDD['response']['body']['items']['item'][index]['ssDur']
+                    ssDur = rDD['response']['body']['items']['item'][i]['ssDur']
                     # ssDur 가조시간
                 except TypeError:
                     ssDur = -99
 
                 try:
-                    avgTca = rDD['response']['body']['items']['item'][index]['avgTca']
+                    avgTca = rDD['response']['body']['items']['item'][i]['avgTca']
                     # avgTca 평균 전운량
                 except TypeError:
                     avgTca = -99
 
                 try:
-                    avgLmac = rDD['response']['body']['items']['item'][index]['avgLmac']
+                    avgLmac = rDD['response']['body']['items']['item'][i]['avgLmac']
                     # avgLmac 평균 중하층운량
                 except TypeError:
                     avgLmac = -99
 
                 try:
-                    sumLrgEv = rDD['response']['body']['items']['item'][index]['sumLrgEv']
+                    sumLrgEv = rDD['response']['body']['items']['item'][i]['sumLrgEv']
                     # sumLrgEv 합계 대형증발량
                 except TypeError:
                     sumLrgEv = -99
 
                 try:
-                    sumSmlEv = rDD['response']['body']['items']['item'][index]['sumSmlEv']
+                    sumSmlEv = rDD['response']['body']['items']['item'][i]['sumSmlEv']
                     # sumSmlEv 합계 소형증발량
                 except TypeError:
                     sumSmlEv = -99
 
                 try:
-                    ddMefs = rDD['response']['body']['items']['item'][index]['ddMefs']
+                    ddMefs = rDD['response']['body']['items']['item'][i]['ddMefs']
                     # ddMefs 일 최심신적설
                 except TypeError:
                     ddMefs = -99
@@ -195,11 +201,11 @@ def data_snow(start, end, location):
                 if (float(ddMefs) > 0):
                     ddMefs = 1
 
-            weather[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, sumLrgEv, sumSmlEv, ddMefs]
+            weather[i] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, sumLrgEv, sumSmlEv, heightList[index], ddMefs]
             date = date + td.Timedelta(days = 1)
     return weather
 
-def data_rain(start, end, location):
+def data_rain(start, end, index):
     url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
         "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
         "&numOfRows=999" \
@@ -207,7 +213,7 @@ def data_rain(start, end, location):
         "&dateCd=DAY" \
         "&startDt=" + str(start) + \
         "&endDt=" + str(end) + \
-        "&stnIds=" + str(location)
+        "&stnIds=" + str(locationList[index])
     request = ul.Request(url)
     response = ul.urlopen(request)
     rescode = response.getcode()
@@ -220,11 +226,11 @@ def data_rain(start, end, location):
         rDD = json.loads(rDJ)
 
         size = int(rDD['response']['body']['totalCount'])
-        weather = [[0] * 17] * (size)
+        weather = [[0] * 18] * (size)
         date = str(start)
         date = dt.datetime(int(date[0:4]), int(date[4:6]), int(date[6:8])).date()
 
-        for index in range(0, size):
+        for i in range(0, size):
             if (size == 1):
                 try:
                     avgTa = rDD['response']['body']['items']['item']['avgTa']
@@ -337,97 +343,97 @@ def data_rain(start, end, location):
                     sumRn = 1
             else:
                 try:
-                    avgTa = rDD['response']['body']['items']['item'][index]['avgTa']
+                    avgTa = rDD['response']['body']['items']['item'][i]['avgTa']
                     # avgTa 평균 기온
                 except TypeError:
                     avgTa = -99
 
                 try:
-                    minTa = rDD['response']['body']['items']['item'][index]['minTa']
+                    minTa = rDD['response']['body']['items']['item'][i]['minTa']
                     # minTa 최저 기온
                 except TypeError:
                     minTa = -99
 
                 try:
-                    maxTa = rDD['response']['body']['items']['item'][index]['maxTa']
+                    maxTa = rDD['response']['body']['items']['item'][i]['maxTa']
                     # maxTa 최고 기온
                 except TypeError:
                     maxTa = -99
 
                 try:
-                    avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+                    avgTd = rDD['response']['body']['items']['item'][i]['avgTd']
                     # avgTd 평균 이슬점온도
                 except TypeError:
                     avgTd = -99
 
                 try:
-                    minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
+                    minRhm = rDD['response']['body']['items']['item'][i]['minRhm']
                     # minRhm 최소 상대습도
                 except TypeError:
                     minRhm = -99
 
                 try:
-                    avgRhm = rDD['response']['body']['items']['item'][index]['avgRhm']
+                    avgRhm = rDD['response']['body']['items']['item'][i]['avgRhm']
                     # avgRhm 평균 상대습도
                 except TypeError:
                     avgRhm = -99
 
                 try:
-                    ssDur = rDD['response']['body']['items']['item'][index]['ssDur']
+                    ssDur = rDD['response']['body']['items']['item'][i]['ssDur']
                     # ssDur 가조시간
                 except TypeError:
                     ssDur = -99
 
                 try:
-                    sumSsHr = rDD['response']['body']['items']['item'][index]['sumSsHr']
+                    sumSsHr = rDD['response']['body']['items']['item'][i]['sumSsHr']
                     # sumSsHr 합계 일조 시간
                 except TypeError:
                     sumSsHr = -99
 
                 try:
-                    hr1MaxIcsr = rDD['response']['body']['items']['item'][index]['hr1MaxIcsr']
+                    hr1MaxIcsr = rDD['response']['body']['items']['item'][i]['hr1MaxIcsr']
                     # hr1MaxIcsr 1시간 최다 일사량
                 except TypeError:
                     hr1MaxIcsr = -99
 
                 try:
-                    sumGsr = rDD['response']['body']['items']['item'][index]['sumGsr']
+                    sumGsr = rDD['response']['body']['items']['item'][i]['sumGsr']
                     # sumGsr 합계 일사
                 except TypeError:
                     sumGsr = -99
 
                 try:
-                    avgTca = rDD['response']['body']['items']['item'][index]['avgTca']
+                    avgTca = rDD['response']['body']['items']['item'][i]['avgTca']
                     # avgTca 평균 전운량
                 except TypeError:
                     avgTca = -99
 
                 try:
-                    avgLmac = rDD['response']['body']['items']['item'][index]['avgLmac']
+                    avgLmac = rDD['response']['body']['items']['item'][i]['avgLmac']
                     # avgLmac 평균 중하층운량
                 except TypeError:
                     avgLmac = -99
 
                 try:
-                    sumLrgEv = rDD['response']['body']['items']['item'][index]['sumLrgEv']
+                    sumLrgEv = rDD['response']['body']['items']['item'][i]['sumLrgEv']
                     # sumLrgEv 합계 대형증발량
                 except TypeError:
                     sumLrgEv = -99
 
                 try:
-                    sumSmlEv = rDD['response']['body']['items']['item'][index]['sumSmlEv']
+                    sumSmlEv = rDD['response']['body']['items']['item'][i]['sumSmlEv']
                     # sumSmlEv 합계 소형증발량
                 except TypeError:
                     sumSmlEv = -99
 
                 try:
-                    n99Rn = rDD['response']['body']['items']['item'][index]['n99Rn']
+                    n99Rn = rDD['response']['body']['items']['item'][i]['n99Rn']
                     # n99Rn 9-9 강수
                 except TypeError:
                     n99Rn = -99
 
                 try:
-                    sumRn = rDD['response']['body']['items']['item'][index]['sumRn']
+                    sumRn = rDD['response']['body']['items']['item'][i]['sumRn']
                     # sumRn 일강수량
                 except TypeError:
                     sumRn = 0
@@ -436,7 +442,7 @@ def data_rain(start, end, location):
                 if (float(sumRn) > 0):
                     sumRn = 1
 
-            weather[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, sumRn]
+            weather[i] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, sumSsHr, hr1MaxIcsr, sumGsr, avgTca, avgLmac, sumLrgEv, sumSmlEv, n99Rn, heightList[index], sumRn]
 
             date = date + td.Timedelta(days = 1)
     return weather
@@ -541,22 +547,22 @@ def data_typhoon(start, end):
             date = date + td.Timedelta(days=1)
     return weather
 
-# 지점 코드 (default: 대전)
-locationCodeList = [108, 112, 143, 133, 159, 152, 156, 184]
-date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
-
 # snow
 
-weather = data_snow(20120101, 20131231, 133)
-weather2 = data_snow(20140101, 20151231, 133)
-weather3 = data_snow(20160101, 20171231, 133)
-weather4 = data_snow(20180101, 20191231, 133)
-weather = np.vstack((weather, weather2, weather3, weather4))
+weather = data_snow(20180101, 20191231, 0)
+weather2 = data_snow(20180101, 20191231, 1)
+weather3 = data_snow(20180101, 20191231, 2)
+weather4 = data_snow(20180101, 20191231, 3)
+weather5 = data_snow(20180101, 20191231, 4)
+weather6 = data_snow(20180101, 20191231, 5)
+weather7 = data_snow(20180101, 20191231, 6)
+weather8 = data_snow(20180101, 20191231, 7)
+weather = np.vstack((weather, weather2, weather3, weather4, weather5, weather6, weather7, weather8))
 weather = pd.DataFrame(weather)
 weather.dropna(inplace = True)
 
-x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]]
-y = weather[[12]]
+x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
+y = weather[[13]]
 
 x = x.astype(np.float64)
 y = y.astype(np.float64)
@@ -564,30 +570,34 @@ y = y.astype(np.float64)
 scaler = StandardScaler()
 x_scaled = scaler.fit_transform(x)
 
-log = LogisticRegression()
+log = LogisticRegression(solver='lbfgs', max_iter=2000)
 log.fit(x_scaled, y.values.ravel())
 
 snowLocation = []
-for index in locationCodeList:
-    snowX = np.array(data_snow(date, date, index))
-    snowX = np.nan_to_num(snowX[0, 1:12])
+for i in range(0, 8):
+    snowX = np.array(data_snow(date, date, i))
+    snowX = np.nan_to_num(snowX[0, 1:13])
 
     snowX = scaler.transform(snowX.reshape(1, -1))
     snowY = log.predict_proba(snowX)
     snowLocation.append(str(round(snowY[0, 1] * 100, 2)))
 
-# # rain
+# rain
 
-weather = data_rain(20120101, 20131231, 133)
-weather2 = data_rain(20140101, 20151231, 133)
-weather3 = data_rain(20160101, 20171231, 133)
-weather4 = data_rain(20180101, 20191231, 133)
-weather = np.vstack((weather, weather2, weather3, weather4))
+weather = data_rain(20180101, 20191231, 0)
+weather2 = data_rain(20180101, 20191231, 1)
+weather3 = data_rain(20180101, 20191231, 2)
+weather4 = data_rain(20180101, 20191231, 3)
+weather5 = data_rain(20180101, 20191231, 4)
+weather6 = data_rain(20180101, 20191231, 5)
+weather7 = data_rain(20180101, 20191231, 6)
+weather8 = data_rain(20180101, 20191231, 7)
+weather = np.vstack((weather, weather2, weather3, weather4, weather5, weather6, weather7, weather8))
 weather = pd.DataFrame(weather)
 weather.dropna(inplace = True)
 
-x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]]
-y = weather[[16]]
+x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]]
+y = weather[[17]]
 
 x = x.astype(np.float64)
 y = y.astype(np.float64)
@@ -595,13 +605,13 @@ y = y.astype(np.float64)
 scaler = StandardScaler()
 x_scaled = scaler.fit_transform(x)
 
-log = LogisticRegression()
+log = LogisticRegression(solver='lbfgs', max_iter=2000)
 log.fit(x_scaled, y.values.ravel())
 
 rainLocation = []
-for index in locationCodeList:
-    rainX = np.array(data_rain(date, date, index))
-    rainX = np.nan_to_num(rainX[0, 1:16])
+for i in range(0, 8):
+    rainX = np.array(data_rain(date, date, i))
+    rainX = np.nan_to_num(rainX[0, 1:17])
     rainX = scaler.transform(rainX.reshape(1, -1))
     rainY = log.predict_proba(rainX)
     rainLocation.append(str(round(rainY[0, 1] * 100, 2)))
@@ -664,8 +674,6 @@ log.fit(x_scaled, y)
 
 typhoonX = scaler.transform(typhoonX.reshape(1, -1))
 typhoonY = log.predict_proba(typhoonX)
-
-
 
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS

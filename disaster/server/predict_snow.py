@@ -6,7 +6,13 @@ import datetime as dt
 import timedelta as td
 import numpy as np
 
-def data_snow(start, end, location):
+# 지점 코드 서울 인천 대구 대전 부산 울산 광주 제주 순서
+locationList = [108, 112, 143, 133, 159, 152, 156, 184]
+
+# 지역에 위치한 산의 높이 (km)
+heightList = [0.7969, 0.6153, 1.3230, 0.7922, 1.1715, 2.1346, 1.2644, 0.5202]
+
+def data_snow(start, end, index):
     url = "http://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList" \
         "?serviceKey=LAEin4h5h2HeNf9fuSWuorK2uW5MyuvoiWeJL3uSRZivdAzWhtcrCECKzSKrU9Dfwe8W6tdNR24tDTBZEPYiEQ%3D%3D" \
         "&numOfRows=999" \
@@ -14,7 +20,7 @@ def data_snow(start, end, location):
         "&dateCd=DAY" \
         "&startDt=" + str(start) + \
         "&endDt=" + str(end) + \
-        "&stnIds=" + str(location)
+        "&stnIds=" + str(locationList[index])
     request = ul.Request(url)
     response = ul.urlopen(request)
     rescode = response.getcode()
@@ -27,11 +33,11 @@ def data_snow(start, end, location):
         rDD = json.loads(rDJ)
 
         size = int(rDD['response']['body']['totalCount'])
-        weather = [[0] * 13] * (size)
+        weather = [[0] * 14] * (size)
         date = str(start)
         date = dt.datetime(int(date[0:4]), int(date[4:6]), int(date[6:8])).date()
 
-        for index in range(0, size):
+        for i in range(0, size):
             if (size == 1):
                 try:
                     avgTa = rDD['response']['body']['items']['item']['avgTa']
@@ -92,12 +98,16 @@ def data_snow(start, end, location):
                     # sumLrgEv 합계 대형증발량
                 except TypeError:
                     sumLrgEv = -99
+                if (sumLrgEv is None):
+                    sumLrgEv = 0
 
                 try:
                     sumSmlEv = rDD['response']['body']['items']['item']['sumSmlEv']
                     # sumSmlEv 합계 소형증발량
                 except TypeError:
                     sumSmlEv = -99
+                if (sumSmlEv is None):
+                    sumSmlEv = 0
 
                 try:
                     ddMefs = rDD['response']['body']['items']['item']['ddMefs']
@@ -110,73 +120,73 @@ def data_snow(start, end, location):
                     ddMefs = 1
             else:
                 try:
-                    avgTa = rDD['response']['body']['items']['item'][index]['avgTa']
+                    avgTa = rDD['response']['body']['items']['item'][i]['avgTa']
                     # avgTa 평균 기온
                 except TypeError:
                     avgTa = -99
 
                 try:
-                    minTa = rDD['response']['body']['items']['item'][index]['minTa']
+                    minTa = rDD['response']['body']['items']['item'][i]['minTa']
                     # minTa 최저 기온
                 except TypeError:
                     minTa = -99
 
                 try:
-                    maxTa = rDD['response']['body']['items']['item'][index]['maxTa']
+                    maxTa = rDD['response']['body']['items']['item'][i]['maxTa']
                     # maxTa 최고 기온
                 except TypeError:
                     maxTa = -99
 
                 try:
-                    avgTd = rDD['response']['body']['items']['item'][index]['avgTd']
+                    avgTd = rDD['response']['body']['items']['item'][i]['avgTd']
                     # avgTd 평균 이슬점온도
                 except TypeError:
                     avgTd = -99
 
                 try:
-                    minRhm = rDD['response']['body']['items']['item'][index]['minRhm']
+                    minRhm = rDD['response']['body']['items']['item'][i]['minRhm']
                     # minRhm 최소 상대습도
                 except TypeError:
                     minRhm = -99
 
                 try:
-                    avgRhm = rDD['response']['body']['items']['item'][index]['avgRhm']
+                    avgRhm = rDD['response']['body']['items']['item'][i]['avgRhm']
                     # avgRhm 평균 상대습도
                 except TypeError:
                     avgRhm = -99
 
                 try:
-                    ssDur = rDD['response']['body']['items']['item'][index]['ssDur']
+                    ssDur = rDD['response']['body']['items']['item'][i]['ssDur']
                     # ssDur 가조시간
                 except TypeError:
                     ssDur = -99
 
                 try:
-                    avgTca = rDD['response']['body']['items']['item'][index]['avgTca']
+                    avgTca = rDD['response']['body']['items']['item'][i]['avgTca']
                     # avgTca 평균 전운량
                 except TypeError:
                     avgTca = -99
 
                 try:
-                    avgLmac = rDD['response']['body']['items']['item'][index]['avgLmac']
+                    avgLmac = rDD['response']['body']['items']['item'][i]['avgLmac']
                     # avgLmac 평균 중하층운량
                 except TypeError:
                     avgLmac = -99
 
                 try:
-                    sumLrgEv = rDD['response']['body']['items']['item'][index]['sumLrgEv']
+                    sumLrgEv = rDD['response']['body']['items']['item'][i]['sumLrgEv']
                     # sumLrgEv 합계 대형증발량
                 except TypeError:
                     sumLrgEv = -99
 
                 try:
-                    sumSmlEv = rDD['response']['body']['items']['item'][index]['sumSmlEv']
+                    sumSmlEv = rDD['response']['body']['items']['item'][i]['sumSmlEv']
                     # sumSmlEv 합계 소형증발량
                 except TypeError:
                     sumSmlEv = -99
 
                 try:
-                    ddMefs = rDD['response']['body']['items']['item'][index]['ddMefs']
+                    ddMefs = rDD['response']['body']['items']['item'][i]['ddMefs']
                     # ddMefs 일 최심신적설
                 except TypeError:
                     ddMefs = -99
@@ -185,29 +195,27 @@ def data_snow(start, end, location):
                 if (float(ddMefs) > 0):
                     ddMefs = 1
 
-            weather[index] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, sumLrgEv, sumSmlEv, ddMefs]
+            weather[i] = [str(date), avgTa, minTa, maxTa, avgTd, minRhm, avgRhm, ssDur, avgTca, avgLmac, sumLrgEv, sumSmlEv, heightList[index], ddMefs]
             date = date + td.Timedelta(days = 1)
     return weather
 
-weather = data_snow(20120101, 20131231, 133)
-weather2 = data_snow(20140101, 20151231, 133) # 대전 지역 20180101 ~ 20200101 기상 데이터 조회
-weather3 = data_snow(20160101, 20171231, 133)
-weather4 = data_snow(20180101, 20191231, 133)
-weather = np.vstack((weather, weather2, weather3, weather4))
-
-date = (dt.datetime.today() - td.Timedelta(days = 2)).strftime('%Y%m%d')
-snowX = data_snow(date, date, 133)
-snowX = np.array(snowX)
-snowX = snowX[0, 1:12]
+weather = data_snow(20180101, 20191231, 0)
+weather2 = data_snow(20180101, 20191231, 1)
+weather3 = data_snow(20180101, 20191231, 2)
+weather4 = data_snow(20180101, 20191231, 3)
+weather5 = data_snow(20180101, 20191231, 4)
+weather6 = data_snow(20180101, 20191231, 5)
+weather7 = data_snow(20180101, 20191231, 6)
+weather8 = data_snow(20180101, 20191231, 7)
+weather = np.vstack((weather, weather2, weather3, weather4, weather5, weather6, weather7, weather8))
+weather = pd.DataFrame(weather)
+weather.dropna(inplace = True)
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-weather = pd.DataFrame(weather)
-weather.dropna(inplace = True)
-
-x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]]
-y = weather[[12]]
+x = weather[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
+y = weather[[13]]
 
 x = x.astype(np.float64)
 y = y.astype(np.float64)
@@ -238,26 +246,3 @@ from sklearn.ensemble import RandomForestClassifier
 forest = RandomForestClassifier(max_depth=2, random_state=0)
 forest.fit(x_train, y_train)
 print("Random Forest test data accuracy: ", format(forest.score(x_test, y_test)))
-
-log = LogisticRegression()
-log.fit(x_scaled, y.values.ravel())
-
-snowX = snowX.reshape(1, -1)
-snowX = scaler.transform(snowX)
-
-snowY = log.predict_proba(snowX)
-print("오늘 눈이 올 확률은 " + str(round(snowY[0, 1] * 100, 2)) + "% 입니다.")
-
-# from flask import Flask, request, jsonify, render_template
-# from flask_cors import CORS
-
-# app = Flask(__name__)
-# CORS(app)
-
-# @app.route('/Snow')
-# def predict_rain():
-#     snow = (str(round(snowY[0, 1] * 100, 2)))
-#     return {'snow': snow}
-
-# if __name__ == '__main__':
-#     app.run(host = '127.0.0.1', port = 5000)

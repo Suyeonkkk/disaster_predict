@@ -372,19 +372,11 @@ class TyphoonHistory extends Component {
                 td[4 * i + 1].style.display = '';
                 td[4 * i + 2].style.display = '';
                 td[4 * i + 3].style.display = '';
-                td[4 * i].style.borderSpacing = 2;
-                td[4 * i + 1].style.display = 2;
-                td[4 * i + 2].style.display = 2;
-                td[4 * i + 3].style.display = 2;
             } else {
                 td[4 * i].style.display = 'none';
                 td[4 * i + 1].style.display = 'none';
                 td[4 * i + 2].style.display = 'none';
                 td[4 * i + 3].style.display = 'none';
-                td[4 * i].style.borderSpacing = 0;
-                td[4 * i + 1].style.display = 0;
-                td[4 * i + 2].style.display = 0;
-                td[4 * i + 3].style.display = 0;
             }
         }
     }
